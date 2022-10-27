@@ -10,38 +10,47 @@ import pubchempy as pcp
 import time
 import csv
 
-Infile = 'Breast Drug List.xlsx'
-df = pd.read_excel(Infile, engine='openpyxl')
+def writeFile(Outfile, dict_synonyms, lst_unfound):
+    with open(Outfile, 'w') as csv_file:
+        writer = csv.writer(csv_file)
+        for key, value in dict_synonyms.items():
+            writer.writerow([key, value])
+        writer.writerow(['unfound',lst_unfound])
 
-lst_drug = df.values.tolist()
-lst_unfound = []
+def main():
+    Infile = 'Breast Drug List.xlsx'
+    df = pd.read_excel(Infile, engine='openpyxl')
 
-dict_synonyms = {}
+    lst_drug = df.values.tolist()
+    lst_unfound = []
 
-for drug in lst_drug:
-    drug = drug[0]
-    try:
-        df1 = pcp.get_synonyms(drug, 'name')
+    dict_synonyms = {}
 
-        synonyms = df1[0]['Synonym']
+    for drug in lst_drug:
+        drug = drug[0]
+        try:
+            df1 = pcp.get_synonyms(drug, 'name')
 
-        dict_synonyms[drug] = synonyms
+            synonyms = df1[0]['Synonym']
 
-        # print(drug + ' is found')
+            dict_synonyms[drug] = synonyms
 
-        time.sleep(1)
-    except:
-        print(drug + " is invalid drug")
-        lst_unfound.append(drug)
+            # print(drug + ' is found')
 
-Outfile = 'synonyms.csv'
-with open(Outfile, 'w') as csv_file:
-    writer = csv.writer(csv_file)
-    for key, value in dict_synonyms.items():
-        writer.writerow([key, value])
-    writer.writerow(['unfound',lst_unfound])
+            time.sleep(1)
+        except:
+            print(drug + " is invalid drug")
+            lst_unfound.append(drug)
 
-print('There are ' + str(len(dict_synonyms)) + ' drugs.')
+    Outfile = 'synonyms.csv'
+    writeFile(Outfile, dict_synonyms, lst_unfound)
+
+    print('There are ' + str(len(dict_synonyms)) + ' drugs.')
+
+
+if (__name__ == "__main__"):
+    main()
+    
 
 
     
