@@ -1,11 +1,11 @@
 # Pharmacy-Automation---Breast-Cancer-HDI
 
-## v1 Synonyms found of Drugs and Herbs
+## V1 Synonyms found of Drugs and Herbs
 
-| Data | File |
-| --- | --- |
-| Drug List | 'Breast Drug List.xlsx' |
-| Herb List | 'breast cancer herb list.xlsx' |
-| Drug Synonym | 'synonyms_drug.csv' |
-| Herb Synonym (Exact) | 'synonyms_herb_exact.csv' |
-| Herb Synonym (Similar) | 'synonyms_herb_similar.csv' |
+| Data | Folder |File |
+| --- | --- | --- |
+| Drug List | Original | 'Breast Drug List.xlsx' |
+| Herb List | Original | 'breast cancer herb list.xlsx' |
+| Drug Synonym | Synonyms | 'synonyms_drug.csv' |
+| Herb Synonym (Exact) | Synonyms | 'synonyms_herb_exact.csv' |
+| Herb Synonym (Similar) | Synonyms | 'synonyms_herb_similar.csv' |
