@@ -37,7 +37,7 @@ def main():
 
             api_for_exact = 'http://dp2.labqr.com/dpool/get/herb/info?name='+herb+'&exact=1'
             synonym_exact_json = requests.get(api_for_exact).json()
-            synonym_exact_string = synonym_exact_json['content'][0]['synonyms'].replace("。", "").replace("\\n", "").split("、")
+            synonym_exact_string = synonym_exact_json['content'][0]['synonyms'].replace("。", "").replace("\n", "").split("、")
             print("Synonym for exact drug :")
             print(synonym_exact_string)
             dict_synonyms_herb_exact[herb] = synonym_exact_string
@@ -53,7 +53,7 @@ def main():
             print("Synonym for similar drug :")
             for item in synonym_similar_strings:
                 name = item['name']
-                synonym_similar_string = item['synonyms'].replace("。", "").replace("\\n", "").split("、")
+                synonym_similar_string = item['synonyms'].replace("。", "").replace("\n", "").split("、")
                 print(name, synonym_similar_string)
                 dict_synonyms_herb_similar[name] = synonym_similar_string      
             
