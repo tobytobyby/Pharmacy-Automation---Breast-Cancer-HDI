@@ -1,5 +1,4 @@
 import time
-from token import EXACT_TOKEN_TYPES
 import pandas as pd
 import csv
 from FindSynonyms import writeFile
@@ -64,7 +63,6 @@ def main():
         except:
             print(herb + " is invalid herb")
             lst_unfound_herb.append(herb)
-
 
     writeFile('synonyms_herb_exact.csv', dict_synonyms_herb_exact, lst_unfound_herb)
     writeFile('synonyms_herb_similar.csv', dict_synonyms_herb_similar, lst_unfound_herb)
