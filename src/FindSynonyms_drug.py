@@ -18,7 +18,8 @@ def writeFile(Outfile, dict_synonyms, lst_unfound):
         writer.writerow(['unfound',lst_unfound])
 
 def main():
-    Infile = 'Breast Drug List.xlsx'
+    
+    Infile = os.path.abspath('./Original/Breast Drug List.xlsx')
     df = pd.read_excel(Infile, engine='openpyxl')
 
     lst_drug = df.values.tolist()
@@ -42,7 +43,7 @@ def main():
             print(drug + " is invalid drug")
             lst_unfound.append(drug)
 
-    Outfile = 'synonyms.csv'
+    Outfile = os.path.abspath('./Synonyms/synonyms_drug.csv')
     writeFile(Outfile, dict_synonyms, lst_unfound)
 
     print('There are ' + str(len(dict_synonyms)) + ' drugs.')

@@ -1,7 +1,8 @@
+import os
 import time
 import pandas as pd
 import csv
-from FindSynonyms import writeFile
+from FindSynonyms_drug import writeFile
 import requests
 import json
 
@@ -15,7 +16,7 @@ http://dp2.labqr.com/dpool/get/herb/info?name=丹参&exact=0
 """
 
 def main():
-    Infile = 'breast cancer herb list.xlsx'
+    Infile = os.path.abspath('./Original/breast cancer herb list.xlsx')
     df = pd.read_excel(Infile, engine='openpyxl')
 
     lst_herb = df.values.tolist()
@@ -36,7 +37,7 @@ def main():
 
             api_for_exact = 'http://dp2.labqr.com/dpool/get/herb/info?name='+herb+'&exact=1'
             synonym_exact_json = requests.get(api_for_exact).json()
-            synonym_exact_string = synonym_exact_json['content'][0]['synonyms'].split("、")
+            synonym_exact_string = synonym_exact_json['content'][0]['synonyms'].replace("。", "").replace("\\n", "").split("、")
             print("Synonym for exact drug :")
             print(synonym_exact_string)
             dict_synonyms_herb_exact[herb] = synonym_exact_string
@@ -52,7 +53,7 @@ def main():
             print("Synonym for similar drug :")
             for item in synonym_similar_strings:
                 name = item['name']
-                synonym_similar_string = item['synonyms'].split("、")
+                synonym_similar_string = item['synonyms'].replace("。", "").replace("\\n", "").split("、")
                 print(name, synonym_similar_string)
                 dict_synonyms_herb_similar[name] = synonym_similar_string      
             
@@ -64,8 +65,8 @@ def main():
             print(herb + " is invalid herb")
             lst_unfound_herb.append(herb)
 
-    writeFile('synonyms_herb_exact.csv', dict_synonyms_herb_exact, lst_unfound_herb)
-    writeFile('synonyms_herb_similar.csv', dict_synonyms_herb_similar, lst_unfound_herb)
+    writeFile(os.path.abspath('./Synonyms/synonyms_herb_exact.csv'), dict_synonyms_herb_exact, lst_unfound_herb)
+    writeFile(os.path.abspath('./Synonyms/synonyms_herb_similar.csv'), dict_synonyms_herb_similar, lst_unfound_herb)
 
     print('There are ' + str(len(dict_synonyms_herb_exact)) + ' drugs.')
 
